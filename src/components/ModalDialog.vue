@@ -8,7 +8,7 @@
       <div class="modal-body">
         <slot></slot>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" v-if="showFooter">
         <AppButton type="primary" @click="handleConfirm">确认</AppButton>
         <AppButton type="danger" @click="handleClose" style="margin-left: 10px">
           取消
@@ -32,6 +32,10 @@ export default {
     title: {
       type: String,
       default: "提示",
+    },
+    showFooter: {
+      type: Boolean,
+      default: true,
     },
   },
   methods: {
@@ -57,42 +61,94 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  animation: fadeIn 0.2s ease;
 }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .modal-container {
-  width: 400px;
-  background: white;
-  border-radius: 8px;
+  width: 450px;
+  background: linear-gradient(
+    135deg,
+    rgba(26, 26, 46, 0.98) 0%,
+    rgba(22, 33, 62, 0.98) 100%
+  );
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-radius: 20px;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: scaleIn 0.3s ease;
 }
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 .modal-header {
-  padding: 15px;
-  border-bottom: 1px solid #eee;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+
 .modal-title {
   margin: 0;
   font-size: 18px;
+  font-weight: 700;
+  color: white;
 }
+
 .close-btn {
   border: none;
-  background: transparent;
-  font-size: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 22px;
   cursor: pointer;
-  color: #999;
+  color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
 }
+
+.close-btn:hover {
+  background: rgba(255, 107, 107, 0.2);
+  color: #ff6b6b;
+  transform: rotate(90deg);
+}
+
 .modal-body {
-  padding: 20px;
+  padding: 24px;
 }
+
 .modal-footer {
-  padding: 15px;
-  border-top: 1px solid #eee;
+  padding: 20px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   text-align: right;
 }
 </style>

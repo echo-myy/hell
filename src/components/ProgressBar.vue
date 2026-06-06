@@ -93,45 +93,61 @@ export default {
 .progress-bar {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   width: 100%;
 }
+
 .time {
   font-size: 12px;
-  color: #666;
+  color: rgba(255, 255, 255, 0.6);
   width: 50px;
   text-align: center;
+  font-weight: 500;
 }
+
 .progress-container {
   flex: 1;
-  height: 6px;
-  background: #eee;
-  border-radius: 3px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
   position: relative;
   cursor: pointer;
+  overflow: visible;
 }
+
 .progress-bg {
   width: 100%;
   height: 100%;
-  background: #eee;
-  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
 }
+
 .progress-fill {
   position: absolute;
   left: 0;
   top: 0;
   height: 100%;
-  background: #42b983;
-  border-radius: 3px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  border-radius: 4px;
+  transition: width 0.1s ease;
 }
+
 .progress-dot {
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 14px;
-  height: 14px;
-  background: #42b983;
+  width: 18px;
+  height: 18px;
+  background: white;
+  border: 3px solid #667eea;
   border-radius: 50%;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  transition: all 0.2s ease;
+  opacity: 0;
+}
+
+.progress-container:hover .progress-dot {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.1);
 }
 </style>

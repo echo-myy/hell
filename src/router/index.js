@@ -63,32 +63,31 @@ const router = new Router({
 });
 
 // 路由守卫：优化参数命名（_to/_from 表示有意未使用）
-router.beforeEach((_to, _from, next) => {
-  // 1. 判断是否需要登录授权
-  const requiresAuth = _to.meta.requiresAuth;
-
-  // 2. 容错获取登录状态
-  const isLogin = store?.state?.user?.isLogin || false;
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.meta?.requiresAuth ?? false;
+  const isLogin = store?.state?.user?.isLogin ?? false;
 
   if (requiresAuth) {
-    // 需要登录：已登录放行，未登录跳登录页
     if (isLogin) {
       next();
     } else {
       next({
         path: "/login",
-        query: { redirect: _to.fullPath },
+        query: { redirect: to.fullPath },
         replace: true,
       });
     }
   } else {
-    // 不需要登录（仅登录页）：已登录且非登录页跳转，跳首页
-    if (_to.path === "/login" && isLogin && _from.path !== "/login") {
+    if (to.path === "/login" && isLogin && from.path !== "/login") {
       next({ path: "/home", replace: true });
     } else {
       next();
     }
   }
+});
+
+router.afterEach((to) => {
+  console.log(`Route changed to: ${to.path}`);
 });
 
 export default router;
